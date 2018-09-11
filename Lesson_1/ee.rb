@@ -1,11 +1,10 @@
-f = "45"
-ff = "yt"
-if ff.to_i == nil
-  puts "строка"
-else
-  puts "цифра"
-end
-# t = "kl"
-# puts t.to_i
-# var_1 == "нет" || var_1 == "no"
-#   puts "Досвидания."
+puts "Программа для вычисления площади треугольника"
+print "Введите положительное число для стороны 'а'."
+input = gets
+var_1 = input.chomp.to_f
+print "Введите положительное число для стороны 'b'."
+input = gets
+var_2 = input.chomp.to_f
+print "Введите положительное число для стороны 'c'."
+input = gets
+var_3 = input.chomp.to_f
