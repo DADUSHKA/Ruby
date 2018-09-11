@@ -26,8 +26,9 @@ if a == b && a == c
 elsif gipotenuza**2 == side1**2 + side2**2
   puts 'Треугольник прямоугольный'
 else
-  puts 'Треугольник НЕ прямоугольный'
+  puts 'Треугольник не прямоугольный'
 end
+
 puts ""
 print "Нажмите 'Enter' для выхода из программы."
-input = gets
+gets

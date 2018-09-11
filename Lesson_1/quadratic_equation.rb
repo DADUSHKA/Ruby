@@ -21,6 +21,7 @@ elsif D == 0
 else
   puts 'Корней нет'
 end
+
 puts ""
 print "Нажмите 'Enter' для выхода из программы."
 gets
