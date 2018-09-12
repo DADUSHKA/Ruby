@@ -7,15 +7,15 @@ b = gets.to_f
 print "Введите положительное или отрицательное число для значения 'c'"
 c = gets.to_f
 
-D = b**2 - (4 * a * c)
-var = Math.sqrt(D)
+dsc = b**2 - (4 * a * c)
+var = Math.sqrt(dsc) unless dsc < 0
 
-if D > 0
+if dsc > 0
   x1 = (-b + var ) / (2 * a)
   x2 = (-b - var ) / (2 * a)
   puts "Уравнение имеет два корня #{x1} и #{x2}"
 
-elsif D == 0
+elsif dsc == 0
   x1 = -b / 2 * a
   puts "Уравнение имеет один корень #{x1}"
 else

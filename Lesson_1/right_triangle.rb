@@ -28,7 +28,7 @@ side = side1**2 + side2**2
 
 if a == b && a == c
   puts 'Треугольник равносторонний.'
-elsif gipotenuza.to_i == side.to_i && side1 == side2
+elsif gipotenuza.round(2) == side && side1 == side2
   puts
   puts 'Треугольник прямоугольный и равнобедренный'
 elsif gipotenuza.to_i == side.to_i
@@ -41,3 +41,5 @@ end
 puts
 print "Нажмите 'Enter' для выхода из программы."
 gets
+
+
