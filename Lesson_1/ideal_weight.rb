@@ -8,17 +8,17 @@ if  var == "да" || var == "yes" || var == "lf"
   height = gets.chomp
 
   while height.to_i == 0
-    print "Введите цифры."
+  print "Введите цифры."
     height = gets.chomp
   end
 
   ideal_weight = height.to_i - 110
 
-  if ideal_weight < 0
-    puts "#{name} ваш вес идеальный."
-  else
+if ideal_weight < 0
+  puts "#{name} ваш вес идеальный."
+else
     puts "#{name} ваш идеальный вес #{ideal_weight}."
-  end
+end
 
 else
   puts "Досвидания."
