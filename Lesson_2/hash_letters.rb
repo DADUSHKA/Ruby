@@ -1,4 +1,4 @@
-hash = Hash.new
+hash = {}
 letters =['a', 'e', 'i', 'o', 'u', 'y']
 array = ("a".."z").to_a.zip((1..26).to_a)
 

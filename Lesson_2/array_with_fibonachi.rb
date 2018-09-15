@@ -1,4 +1,4 @@
-arr = Array.new
+arr = []
 a = 0
 b = 1
 
