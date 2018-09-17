@@ -3,7 +3,7 @@ class Station
   attr_reader :list_all_train, :list_type_train
 
   def initialize(name)
-    @name = name
+    @name           = name
     @list_all_train = []
   end
 
@@ -15,18 +15,12 @@ class Station
     @list_all_train.delete(train)
   end
 
-  def trains_calc
-    cargo, passenger = [0,0]
+  def trains_calc(type)
+    counter = 0
     list_all_train.each do |train|
-      cargo     += 1 if train.type == "cargo"
-      passenger += 1 if train.type == "passenger"
+      counter += 1 if train.type == type
     end
-    [cargo, passenger]
-  end
-
-  def list_type_train
-    puts "cargo - #{trains_calc[0]}"
-    puts "passenger - #{trains_calc[1]}"
+    puts "#{type} - #{counter} шт."
   end
 
 end

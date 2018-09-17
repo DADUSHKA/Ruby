@@ -1,10 +1,9 @@
 class Train
 
   attr_accessor :speed
-  attr_reader :amount_wagons, :number, :type, :train_route, :real_station,
-    :start_station, :route, :previous_station, :next_station
+  attr_reader :amount_wagons, :previous_station, :next_station, :real_station
 
-  def initialize(number="", type="", amount_wagons=0)
+  def initialize(number = "", type = "", amount_wagons = 0)
     @number        = number
     @type          = type
     @amount_wagons = amount_wagons
@@ -39,15 +38,21 @@ class Train
     @start_station = @route.first
   end
 
-  @@var = 0
+  # Я использовал переменную класса,
+  # чтобы отслеживать количество
+  # запросов к методам 'along_stations, back_station'
+  # и использовать эту переменную в виде счетчика
+  # для индексов массива названий станций.
+
+  @@indicator = 0
   def along_stations
-    @@var +=1
-    @real_station = @route[@@var]
+    @@indicator +=1
+    @real_station = @route[@@indicator]
   end
 
   def back_station
-    @@var -=1
-    @real_station = @route[@@var]
+    @@indicator -=1
+    @real_station = @route[@@indicator]
   end
 
   def next_station
@@ -56,8 +61,8 @@ class Train
   end
 
   def previous_station
-    next_index    = route.index(@real_station) - 1
-    @next_station = @route[next_index]
+    next_index        = route.index(@real_station) - 1
+    @previous_station = @route[next_index]
   end
 
 end
