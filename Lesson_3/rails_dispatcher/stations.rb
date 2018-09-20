@@ -1,10 +1,16 @@
 class Station
 
-  attr_reader :list_all_train, :list_type_train
+  attr_reader :list_all_train, :list_type_train, :name
 
   def initialize(name)
     @name           = name
     @list_all_train = []
+    self.class.all << self
+    puts "Создана станция #{@name}."
+  end
+
+  def self.all
+    @all ||= []
   end
 
   def receive_trains(train)
@@ -20,7 +26,7 @@ class Station
     list_all_train.each do |train|
       counter += 1 if train.type == type
     end
-    puts "#{type} - #{counter} шт."
+    puts "На станции поездов типа '#{type}' - #{counter} шт."
   end
 
 end
