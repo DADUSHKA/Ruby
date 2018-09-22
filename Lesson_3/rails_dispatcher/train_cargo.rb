@@ -1,19 +1,16 @@
-
-
 class CargoTrain < Train
 
   def initialize
     super
-    @type = :cargo
-    puts " Поезд №#{@number} типа #{@type} создан."
+     puts "#{type} поезд №#{@number} создан."
   end
-
 
 
   private
 
+
   def plus_car(type_vagon)
-    if type_vagon.type == :cargo
+    if type_vagon.is_a?(CargoCar)
       @composition_wagons << type_vagon
       car_announcement
     else

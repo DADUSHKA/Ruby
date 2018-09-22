@@ -10,13 +10,12 @@ require_relative "rails_dispatcher/train_passenger"
 
 class Main
 
-  attr_reader :routes, :trains, :cars, :stations
-
   def initialize
-    @stations = Station.all
-    @routes = Route.all
-    @trains = Train.all
-    @cars = Car.all
+    @stations = Station.add
+    @routes = Route.add
+    @trains = Train.add
+    @cars = Car.add
+    main
   end
 
   def main
@@ -53,8 +52,8 @@ class Main
   end
 
 
-
   private
+
 
   def main_menu
     puts "Меню управления :
@@ -87,6 +86,7 @@ class Main
       add_station
     end
   end
+
   def add_station
     loop do
       puts "Введите:
@@ -126,6 +126,7 @@ class Main
       add_car_to_cargo_train
     end
   end
+
   def add_car_to_passenger_train
     puts "Введите:
         1 - добавить вагоны к поезду
@@ -138,6 +139,7 @@ class Main
       break if count == '0'
     end
   end
+
   def add_car_to_cargo_train
     puts "Введите:
         1 - добавить вагоны к поезду

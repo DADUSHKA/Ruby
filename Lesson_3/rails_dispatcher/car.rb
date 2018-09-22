@@ -1,18 +1,18 @@
 class Car
 
-  attr_reader :type, :number
+  attr_reader :number
 
   def initialize
     @number = generate_number
-    self.class.all << self
+    self.class.add << self
   end
 
   def generate_number
     rand(10).to_s
   end
 
-  def self.all
-    @@all ||= []
+  def self.add
+    @@add ||= []
   end
 
 end

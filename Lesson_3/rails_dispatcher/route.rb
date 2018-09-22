@@ -6,16 +6,12 @@ class Route
     @list_station   = [start_station, finish_station]
     @start_station  = start_station
     @finish_station = finish_station
-    self.class.all << self
+    self.class.add << self
     puts "Маршрут #{@start_station} - #{@finish_station} cоздан."
   end
 
-  def self.all
-    @all ||= []
-  end
-
-  def info
-    puts Route.all
+  def self.add
+    @add ||= []
   end
 
   def create_station(station)

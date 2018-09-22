@@ -2,8 +2,7 @@ class PassengerCar < Car
 
   def initialize
     super
-    @type = :passenger
-    puts "Создан вагон №#{@number} типа #{@type}."
+    puts "Пассажирский вагон №#{@number} создан ."
   end
 
 end

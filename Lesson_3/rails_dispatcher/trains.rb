@@ -9,11 +9,11 @@ class Train
     @number             = generate_number
     @train_route
     @composition_wagons = []
-    self.class.all << self
+    self.class.add << self
   end
 
-  def self.all
-    @@all ||= []
+  def self.add
+    @@add ||= []
   end
 
   def generate_number
@@ -32,7 +32,7 @@ class Train
 
   def coupling_wagon(type_vagon)
     stop
-puts "Вагон №#{type_vagon.number} прицеплен к поезду."
+    puts "Вагон №#{type_vagon.number} прицеплен к поезду."
     plus_car(type_vagon)
   end
 
@@ -42,14 +42,21 @@ puts "Вагон №#{type_vagon.number} прицеплен к поезду."
     minus_car(type_vagon)
   end
 
-  def take_route(route)
-
-   @train_route   = route
-     @route         = route.list_station
-     @start_station = @route.first
-   puts "Поезд типа'#{@type}' №#{@number} находится станции #{@start_station}."
+  def type
+    if self.class == PassengerTrain
+      type = 'Пассажирский'
+    elsif self.class == CargoTrain
+      type = 'Грузовой'
+    end
   end
 
+  def take_route(route)
+    self.type
+    @train_route   = route
+    @route         = route.list_station
+    @start_station = @route.first
+    puts "#{type} поезд  №#{@number} находится станции #{@start_station}."
+  end
 
   @@indicator = 0
   def along_stations
@@ -77,15 +84,15 @@ puts "Вагон №#{type_vagon.number} прицеплен к поезду."
   end
 
 
-
   private
+
 
   def speed_train
     puts "Скорость поезда #{@speed}"
   end
 
   def train_announcement
-    puts "Поезд типа'#{@type}' №#{@number} прибыл на станцию #{@real_station}."
+    puts "#{type} поезд №#{@number} прибыл на станцию #{@real_station}."
   end
 
   def car_announcement

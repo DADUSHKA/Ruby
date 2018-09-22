@@ -5,12 +5,12 @@ class Station
   def initialize(name)
     @name           = name
     @list_all_train = []
-    self.class.all << self
+    self.class.add << self
     puts "Создана станция #{@name}."
   end
 
-  def self.all
-    @all ||= []
+  def self.add
+    @add ||= []
   end
 
   def receive_trains(train)
