@@ -1,9 +1,18 @@
 class Train
 
   include NameManufacturer
+  include InstanceCounter
 
   attr_accessor :speed
   attr_reader :amount_wagons, :previous_station, :next_station, :real_station, :number
+
+
+
+  def self.find(number)
+    object = nil
+    @add.each { |i| object = i if i.number.to_i == number } unless @add.nil?
+    p object
+  end
 
   def initialize
     generate_number
@@ -11,22 +20,12 @@ class Train
     @number             = generate_number
     @train_route
     @composition_wagons = []
+    register_instance
     self.class.add << self
   end
 
-  def find
-
-  end
-
-  #  создать метод класса find, который принимает номер поезда и
-  # возвращает объект поезда по номеру или nil, если поезд с таким номером не найден.
-
-  def self.add
-    @@add ||= []
-  end
-
   def generate_number
-    srand.to_s.slice(1..3)
+    srand.to_s.slice(1)
   end
 
   def go
@@ -94,6 +93,10 @@ class Train
 
   private
 
+
+  def self.add
+    @add ||= []
+  end
 
   def speed_train
     puts "Скорость поезда #{@speed}"

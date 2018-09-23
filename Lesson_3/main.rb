@@ -223,4 +223,4 @@ class Main
   end
 
 end
-main = Main.new
+# main = Main.new

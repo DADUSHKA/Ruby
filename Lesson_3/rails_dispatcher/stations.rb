@@ -10,11 +10,11 @@ class Station
   end
 
   def self.add
-    @add ||= []
+    @@add ||= []
   end
 
   def self.all
-    @add.map { |i| p "#{i.name}"} unless @add.nil?
+    @@add.map { |i| p "#{i.name}"} unless @@add.nil?
     return
   end
 

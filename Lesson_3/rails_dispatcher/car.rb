@@ -1,6 +1,7 @@
 class Car
 
   include NameManufacturer
+  include InstanceCounter
 
   attr_reader :number
 
