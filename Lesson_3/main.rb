@@ -1,3 +1,5 @@
+require_relative "rails_dispatcher/instance_counter"
+require_relative "rails_dispatcher/name_of_the_manufacturer"
 require_relative "rails_dispatcher/route"
 require_relative "rails_dispatcher/stations"
 require_relative "rails_dispatcher/car"
@@ -106,10 +108,31 @@ class Main
     var = gets.chomp
     if var == '1'
       @stations.first.receive_trains(PassengerTrain.new) unless @stations.empty?
+       puts "Пассажирский поезд №#{@number} создан."
     else
       @stations.first.receive_trains(CargoTrain.new) unless @stations.empty?
+
     end
   end
+
+  # def create_train_passanger
+
+  #   def type
+  #   if self.class == PassengerTrain
+  #     type = 'Пассажирский'
+  #     PassengerTrain.new
+  #   elsif self.class == CargoTrain
+  #     type = 'Грузовой'
+  #     CargoTrain.new
+  #   end
+  # end
+
+  # end
+
+#   def create_train_cargo
+# CargoTrain.new
+# puts "Грузовой поезд №#{CargoTrain.new.number} создан."
+#   end
 
   def give_rout_train
     @trains.last.take_route(@routes.last) unless @routes.empty?
@@ -186,6 +209,7 @@ class Main
 
   def st
     @routes.collect { |i| puts "#{i.list_station.join(", ")}"}
+    return
   end
 
   def option(menu_opt)
@@ -208,5 +232,4 @@ class Main
   end
 
 end
-main = Main.new
-main.main
+ main = Main.new

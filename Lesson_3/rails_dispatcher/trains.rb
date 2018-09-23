@@ -1,5 +1,7 @@
 class Train
 
+  include NameManufacturer
+
   attr_accessor :speed
   attr_reader :amount_wagons, :previous_station, :next_station, :real_station
 
@@ -11,6 +13,13 @@ class Train
     @composition_wagons = []
     self.class.add << self
   end
+
+  def find
+
+  end
+
+  #  создать метод класса find, который принимает номер поезда и
+  # возвращает объект поезда по номеру или nil, если поезд с таким номером не найден.
 
   def self.add
     @@add ||= []
