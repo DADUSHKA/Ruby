@@ -1,13 +1,10 @@
 class Station
 
+  include InstanceCounter
+
   attr_reader :list_all_train, :list_type_train, :name
 
-  def initialize(name)
-    @name           = name
-    @list_all_train = []
-    self.class.add << self
-    puts "Создана станция #{@name}."
-  end
+  @@add = []
 
   def self.add
     @@add ||= []
@@ -16,6 +13,13 @@ class Station
   def self.all
     @@add.map { |i| p "#{i.name}"} unless @@add.nil?
     return
+  end
+
+  def initialize(name)
+    @name           = name
+    @list_all_train = []
+    self.class.add << self
+    puts "Создана станция #{@name}."
   end
 
   def receive_trains(train)

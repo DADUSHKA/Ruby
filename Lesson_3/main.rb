@@ -12,6 +12,8 @@ require_relative "rails_dispatcher/train_passenger"
 
 class Main
 
+  attr_reader :trains
+
   def initialize
     @stations = Station.add
     @routes = Route.add
@@ -95,7 +97,6 @@ class Main
            названия промежуточных станций
            0 - для выхода "
       station = gets.chomp
-
       break if station == '0'
       @routes.last.create_station(Station.new(station).name)
     end
@@ -124,8 +125,8 @@ class Main
   end
 
   def give_rout_train
-    type_train
     @trains.last.take_route(@routes.last) unless @routes.empty?
+    type_train
     puts "#{type_train} поезд  №#{@trains.last.number} находится станции #{@stations.first.name}."
   end
 
@@ -148,6 +149,7 @@ class Main
     loop do
       count = gets.chomp
       PassengerCar.new unless @trains.empty?
+      puts "Пассажирский вагон №#{@cars.last.number} создан ."
       @trains.last.coupling_wagon(@cars.last) unless @trains.empty?
       next if count == '1'
       break if count == '0'
@@ -161,6 +163,7 @@ class Main
     loop do
       count = gets.chomp
       CargoCar.new unless @trains.empty?
+      puts "Грузовой вагон №#{@cars.last.number} создан ."
       @trains.last.coupling_wagon(@cars.last) unless @trains.empty?
       next if count == '1'
       break if count == '0'

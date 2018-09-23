@@ -6,16 +6,15 @@ class Train
   attr_accessor :speed
   attr_reader :amount_wagons, :previous_station, :next_station, :real_station, :number
 
-
-
   def self.find(number)
     object = nil
-    @add.each { |i| object = i if i.number.to_i == number } unless @add.nil?
+    @@add.each { |i| object = i if i.number.to_i == number } unless @add.nil?
     p object
   end
 
+  @@add = []
+
   def initialize
-    generate_number
     @speed              = 0
     @number             = generate_number
     @train_route
@@ -25,7 +24,12 @@ class Train
   end
 
   def generate_number
-    srand.to_s.slice(1)
+    rand(10).to_s
+    #srand.to_s.slice(1..2)
+  end
+
+  def self.add
+    @@add ||= []
   end
 
   def go
@@ -40,7 +44,6 @@ class Train
 
   def coupling_wagon(type_vagon)
     stop
-    puts "Вагон №#{type_vagon.number} прицеплен к поезду."
     plus_car(type_vagon)
   end
 
@@ -50,16 +53,7 @@ class Train
     minus_car(type_vagon)
   end
 
-  def type
-    if self.class == PassengerTrain
-      type = 'Пассажирский'
-    elsif self.class == CargoTrain
-      type = 'Грузовой'
-    end
-  end
-
   def take_route(route)
-    self.type
     @train_route   = route
     @route         = route.list_station
     @start_station = @route.first
@@ -93,10 +87,6 @@ class Train
 
   private
 
-
-  def self.add
-    @add ||= []
-  end
 
   def speed_train
     puts "Скорость поезда #{@speed}"
