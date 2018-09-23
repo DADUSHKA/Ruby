@@ -22,7 +22,6 @@ class Station
     puts "Создана станция #{@name}."
   end
 
-<<<<<<< HEAD
   def self.add
     @add ||= []
   end
@@ -32,8 +31,6 @@ class Station
     return
   end
 
-=======
->>>>>>> moduls_and_trains
   def receive_trains(train)
     @list_all_train << train
   end

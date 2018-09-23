@@ -1,10 +1,7 @@
 class Train
 
   include NameManufacturer
-<<<<<<< HEAD
-=======
   include InstanceCounter
->>>>>>> moduls_and_trains
 
   attr_accessor :speed
   attr_reader :amount_wagons, :previous_station, :next_station, :real_station, :number
@@ -26,21 +23,12 @@ class Train
     self.class.add << self
   end
 
-<<<<<<< HEAD
-  def find
-
-  end
-
-  #  создать метод класса find, который принимает номер поезда и
-  # возвращает объект поезда по номеру или nil, если поезд с таким номером не найден.
-
   def self.add
     @@add ||= []
-=======
+  end
+
   def generate_number
     rand(10).to_s
-    #srand.to_s.slice(1..2)
->>>>>>> moduls_and_trains
   end
 
   def self.add

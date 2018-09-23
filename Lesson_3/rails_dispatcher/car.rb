@@ -1,10 +1,6 @@
 class Car
 
   include NameManufacturer
-<<<<<<< HEAD
-=======
-  include InstanceCounter
->>>>>>> moduls_and_trains
 
   attr_reader :number
 

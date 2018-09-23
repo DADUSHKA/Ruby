@@ -1,18 +1,10 @@
 module InstanceCounter
 
-<<<<<<< HEAD
-# instances, который возвращает кол-во экземпляров данного класса
-
-
-# register_instance, который увеличивает счетчик кол-ва экземпляров класса и
-# который можно вызвать из конструктора. При этом, данный метод не должен быть публичным.
-=======
   module ClassMethods
     def instances
       self.add.size
     end
   end
-
 
   module InstanceMethods
 
@@ -28,6 +20,5 @@ module InstanceCounter
     base.extend ClassMethods
     base.send :include, InstanceMethods
   end
->>>>>>> moduls_and_trains
 
 end

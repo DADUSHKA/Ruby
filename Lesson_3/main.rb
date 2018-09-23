@@ -109,13 +109,7 @@ class Main
     var = gets.chomp
     if var == '1'
       @stations.first.receive_trains(PassengerTrain.new) unless @stations.empty?
-<<<<<<< HEAD
        puts "Пассажирский поезд №#{@number} создан."
-    else
-      @stations.first.receive_trains(CargoTrain.new) unless @stations.empty?
-
-=======
-      puts "Пассажирский поезд №#{@trains.last.number} создан."
     else
       @stations.first.receive_trains(CargoTrain.new) unless @stations.empty?
       puts "Грузовой поезд №#{@trains.last.number} создан."
@@ -127,28 +121,8 @@ class Main
       type_train = 'Пассажирски'
     elsif @trains.last.is_a?(CargoCar)
       type_train = 'Грузовой'
->>>>>>> moduls_and_trains
     end
   end
-
-  # def create_train_passanger
-
-  #   def type
-  #   if self.class == PassengerTrain
-  #     type = 'Пассажирский'
-  #     PassengerTrain.new
-  #   elsif self.class == CargoTrain
-  #     type = 'Грузовой'
-  #     CargoTrain.new
-  #   end
-  # end
-
-  # end
-
-#   def create_train_cargo
-# CargoTrain.new
-# puts "Грузовой поезд №#{CargoTrain.new.number} создан."
-#   end
 
   def give_rout_train
     @trains.last.take_route(@routes.last) unless @routes.empty?
@@ -252,8 +226,6 @@ class Main
   end
 
 end
-<<<<<<< HEAD
- main = Main.new
-=======
-# main = Main.new
->>>>>>> moduls_and_trains
+
+main = Main.new
+
