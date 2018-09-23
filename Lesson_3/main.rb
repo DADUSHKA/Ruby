@@ -12,6 +12,8 @@ require_relative "rails_dispatcher/train_passenger"
 
 class Main
 
+  attr_reader :trains
+
   def initialize
     @stations = Station.add
     @routes = Route.add
@@ -95,7 +97,6 @@ class Main
            названия промежуточных станций
            0 - для выхода "
       station = gets.chomp
-
       break if station == '0'
       @routes.last.create_station(Station.new(station).name)
     end
@@ -108,10 +109,25 @@ class Main
     var = gets.chomp
     if var == '1'
       @stations.first.receive_trains(PassengerTrain.new) unless @stations.empty?
+<<<<<<< HEAD
        puts "Пассажирский поезд №#{@number} создан."
     else
       @stations.first.receive_trains(CargoTrain.new) unless @stations.empty?
 
+=======
+      puts "Пассажирский поезд №#{@trains.last.number} создан."
+    else
+      @stations.first.receive_trains(CargoTrain.new) unless @stations.empty?
+      puts "Грузовой поезд №#{@trains.last.number} создан."
+    end
+  end
+
+  def type_train
+    if @trains.last.is_a?(PassengerTrain)
+      type_train = 'Пассажирски'
+    elsif @trains.last.is_a?(CargoCar)
+      type_train = 'Грузовой'
+>>>>>>> moduls_and_trains
     end
   end
 
@@ -136,6 +152,8 @@ class Main
 
   def give_rout_train
     @trains.last.take_route(@routes.last) unless @routes.empty?
+    type_train
+    puts "#{type_train} поезд  №#{@trains.last.number} находится станции #{@stations.first.name}."
   end
 
   def add_car_to_train
@@ -157,6 +175,7 @@ class Main
     loop do
       count = gets.chomp
       PassengerCar.new unless @trains.empty?
+      puts "Пассажирский вагон №#{@cars.last.number} создан ."
       @trains.last.coupling_wagon(@cars.last) unless @trains.empty?
       next if count == '1'
       break if count == '0'
@@ -170,6 +189,7 @@ class Main
     loop do
       count = gets.chomp
       CargoCar.new unless @trains.empty?
+      puts "Грузовой вагон №#{@cars.last.number} создан ."
       @trains.last.coupling_wagon(@cars.last) unless @trains.empty?
       next if count == '1'
       break if count == '0'
@@ -232,4 +252,8 @@ class Main
   end
 
 end
+<<<<<<< HEAD
  main = Main.new
+=======
+# main = Main.new
+>>>>>>> moduls_and_trains

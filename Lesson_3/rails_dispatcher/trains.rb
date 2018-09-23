@@ -1,19 +1,32 @@
 class Train
 
   include NameManufacturer
+<<<<<<< HEAD
+=======
+  include InstanceCounter
+>>>>>>> moduls_and_trains
 
   attr_accessor :speed
-  attr_reader :amount_wagons, :previous_station, :next_station, :real_station
+  attr_reader :amount_wagons, :previous_station, :next_station, :real_station, :number
+
+  def self.find(number)
+    object = nil
+    @@add.each { |i| object = i if i.number.to_i == number } unless @add.nil?
+    p object
+  end
+
+  @@add = []
 
   def initialize
-    generate_number
     @speed              = 0
     @number             = generate_number
     @train_route
     @composition_wagons = []
+    register_instance
     self.class.add << self
   end
 
+<<<<<<< HEAD
   def find
 
   end
@@ -23,10 +36,15 @@ class Train
 
   def self.add
     @@add ||= []
+=======
+  def generate_number
+    rand(10).to_s
+    #srand.to_s.slice(1..2)
+>>>>>>> moduls_and_trains
   end
 
-  def generate_number
-    srand.to_s.slice(1..3)
+  def self.add
+    @@add ||= []
   end
 
   def go
@@ -41,7 +59,6 @@ class Train
 
   def coupling_wagon(type_vagon)
     stop
-    puts "Вагон №#{type_vagon.number} прицеплен к поезду."
     plus_car(type_vagon)
   end
 
@@ -51,20 +68,10 @@ class Train
     minus_car(type_vagon)
   end
 
-  def type
-    if self.class == PassengerTrain
-      type = 'Пассажирский'
-    elsif self.class == CargoTrain
-      type = 'Грузовой'
-    end
-  end
-
   def take_route(route)
-    self.type
     @train_route   = route
     @route         = route.list_station
     @start_station = @route.first
-    puts "#{type} поезд  №#{@number} находится станции #{@start_station}."
   end
 
   @@indicator = 0
