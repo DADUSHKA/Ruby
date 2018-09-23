@@ -13,6 +13,11 @@ class Station
     @add ||= []
   end
 
+  def self.all
+    @add.map { |i| p "#{i.name}"} unless @add.nil?
+    return
+  end
+
   def receive_trains(train)
     @list_all_train << train
   end

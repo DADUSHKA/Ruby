@@ -2,7 +2,6 @@ class PassengerTrain < Train
 
   def initialize
     super
-    puts "#{type} поезд №#{@number} создан."
   end
 
 

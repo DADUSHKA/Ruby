@@ -1,5 +1,7 @@
 class Car
 
+  include NameManufacturer
+
   attr_reader :number
 
   def initialize
