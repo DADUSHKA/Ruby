@@ -66,13 +66,13 @@ class Train
   def along_stations
     @@indicator +=1
     @real_station = @route[@@indicator]
-    train_announcement
+
   end
 
   def back_station
     @@indicator -=1
     @real_station = @route[@@indicator]
-    train_announcement
+
   end
 
   def next_station
@@ -99,9 +99,7 @@ class Train
     puts "#{type} поезд №#{@number} прибыл на станцию #{@real_station}."
   end
 
-  def car_announcement
-    puts "В составе поезда стало #{@composition_wagons.size} вагонов."
-  end
+
 
   def minus_car(type_vagon)
     @composition_wagons.delete(type_vagon)

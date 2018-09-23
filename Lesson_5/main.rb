@@ -109,7 +109,7 @@ class Main
     var = gets.chomp
     if var == '1'
       @stations.first.receive_trains(PassengerTrain.new) unless @stations.empty?
-       puts "Пассажирский поезд №#{@number} создан."
+       puts "Пассажирский поезд №#{@trains.last.number} создан."
     else
       @stations.first.receive_trains(CargoTrain.new) unless @stations.empty?
       puts "Грузовой поезд №#{@trains.last.number} создан."
@@ -182,9 +182,14 @@ class Main
     loop do
       count = gets.chomp
       if count == '5'
+        p @trains.last
+        type_train
         @trains.last.along_stations unless @trains.empty?
+        puts "#{type_train} поезд №#{@trains.last.number} прибыл на станцию #{}."
       else
+        type_train
         @trains.last.back_station unless @trains.empty?
+        puts "#{type_train} поезд №#{@trains.last.number} прибыл на станцию #{@real_station}."
       end
       next if count == '5' && count == '6'
       break if count == '0'
