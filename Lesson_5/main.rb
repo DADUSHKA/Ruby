@@ -15,10 +15,9 @@ class Main
   attr_reader :trains
 
   def initialize
-    @stations = Station.add
-    @routes = Route.add
-    @trains = Train.add
-    @cars = Car.add
+    @stations = []
+    @routes = []
+    @trains = []
     main
   end
 
@@ -75,10 +74,10 @@ class Main
   def create_station
     puts "Введите название первой станции:"
     new_station_name = gets.chomp
-    Station.new(new_station_name)
+    @stations << Station.new(new_station_name)
     puts "Введите название второй станции:"
     new_station_name = gets.chomp
-    Station.new(new_station_name)
+    @stations << Station.new(new_station_name)
   end
 
   def create_rout_and_stations
@@ -86,7 +85,7 @@ class Main
       puts "Сначала создайте станции"
       gets
     else
-      Route.new(@stations.first.name, @stations.last.name)
+      @routes << Route.new(@stations.first.name, @stations.last.name)
       add_station
     end
   end
@@ -98,7 +97,9 @@ class Main
            0 - для выхода "
       station = gets.chomp
       break if station == '0'
-      @routes.last.create_station(Station.new(station).name)
+      plus_station = Station.new(station)
+      @stations << plus_station
+      @routes.last.create_station(plus_station.name)
     end
   end
 
@@ -108,10 +109,14 @@ class Main
         2 - грузовой"
     var = gets.chomp
     if var == '1'
-      @stations.first.receive_trains(PassengerTrain.new) unless @stations.empty?
-       puts "Пассажирский поезд №#{@number} создан."
+      new_train = PassengerTrain.new
+      @trains << new_train
+      @stations.first.receive_trains(new_train) unless @stations.empty?
+      puts "Пассажирский поезд №#{@trains.last.number} создан."
     else
-      @stations.first.receive_trains(CargoTrain.new) unless @stations.empty?
+      new_train = CargoTrain.new
+      @trains << new_train
+      @stations.first.receive_trains(new_train) unless @stations.empty?
       puts "Грузовой поезд №#{@trains.last.number} создан."
     end
   end
@@ -119,7 +124,7 @@ class Main
   def type_train
     if @trains.last.is_a?(PassengerTrain)
       type_train = 'Пассажирски'
-    elsif @trains.last.is_a?(CargoCar)
+    elsif @trains.last.is_a?(CargoTrain)
       type_train = 'Грузовой'
     end
   end
@@ -146,26 +151,35 @@ class Main
     puts "Введите:
         1 - добавить вагоны к поезду
         0 - выход "
+        @object = []
     loop do
       count = gets.chomp
-      PassengerCar.new unless @trains.empty?
-      puts "Пассажирский вагон №#{@cars.last.number} создан ."
-      @trains.last.coupling_wagon(@cars.last) unless @trains.empty?
+ @object << PassengerCar.new unless @trains.empty?
+      puts "Пассажирский вагон №#{@object.last.number} создан ."
+      @trains.last.coupling_wagon(@object.last) unless @trains.empty?
+      message_add_car
       next if count == '1'
       break if count == '0'
     end
+  end
+
+  def message_add_car
+    puts "Вагон №#{@object.last.number} прицеплен к поезду."
+puts "В составе поезда стало #{@object.size} вагонов."
   end
 
   def add_car_to_cargo_train
     puts "Введите:
         1 - добавить вагоны к поезду
         0 - выход "
+        @object = []
     loop do
       count = gets.chomp
-      CargoCar.new unless @trains.empty?
-      puts "Грузовой вагон №#{@cars.last.number} создан ."
-      @trains.last.coupling_wagon(@cars.last) unless @trains.empty?
-      next if count == '1'
+      @object << CargoCar.new unless @trains.empty?
+      puts "Грузовой вагон №#{@object.last.number} создан ."
+      @trains.last.coupling_wagon(@object.last) unless @trains.empty?
+      message_add_car
+       next if count == '1'
       break if count == '0'
     end
   end
@@ -228,4 +242,3 @@ class Main
 end
 
 main = Main.new
-

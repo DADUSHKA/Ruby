@@ -47,13 +47,17 @@ class Train
 
   def coupling_wagon(type_vagon)
     stop
-    plus_car(type_vagon)
+     @composition_wagons << type_vagon
+  end
+
+  def train_length
+    @composition_wagons.size
   end
 
   def upcoupling_wagon(type_vagon)
     stop
     puts "Вагон №#{type_vagon.number} отцеплен от поезда."
-    minus_car(type_vagon)
+    @composition_wagons.delete(type_vagon)
   end
 
   def take_route(route)
@@ -97,15 +101,6 @@ class Train
 
   def train_announcement
     puts "#{type} поезд №#{@number} прибыл на станцию #{@real_station}."
-  end
-
-  def car_announcement
-    puts "В составе поезда стало #{@composition_wagons.size} вагонов."
-  end
-
-  def minus_car(type_vagon)
-    @composition_wagons.delete(type_vagon)
-    car_announcement
   end
 
 end
