@@ -4,16 +4,16 @@ class Route
 
   attr_reader :start_station, :list_station
 
+  def self.add
+    @@add ||= []
+  end
+
   def initialize(start_station, finish_station)
     @list_station   = [start_station, finish_station]
     @start_station  = start_station
     @finish_station = finish_station
     self.class.add << self
-    puts "Маршрут #{@start_station} - #{@finish_station} cоздан."
-  end
-
-  def self.add
-    @add ||= []
+    register_instance
   end
 
   def create_station(station)
@@ -22,7 +22,6 @@ class Route
     @list_station << station
     @list_station.insert(0, @start_station)
     @list_station.insert(-1, @finish_station)
-    self
   end
 
   def delete_station(station)

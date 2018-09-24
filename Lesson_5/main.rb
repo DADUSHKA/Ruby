@@ -18,7 +18,7 @@ class Main
     @stations = []
     @routes = []
     @trains = []
-    main
+    #main
   end
 
   def main
@@ -75,9 +75,11 @@ class Main
     puts "Введите название первой станции:"
     new_station_name = gets.chomp
     @stations << Station.new(new_station_name)
+    puts "Создана станция назначения '#{new_station_name}'."
     puts "Введите название второй станции:"
     new_station_name = gets.chomp
     @stations << Station.new(new_station_name)
+    puts "Создана станция  прибытия '#{new_station_name}'."
   end
 
   def create_rout_and_stations
@@ -86,6 +88,8 @@ class Main
       gets
     else
       @routes << Route.new(@stations.first.name, @stations.last.name)
+      puts "Маршрут #{@stations.first.name} - #{@stations.last.name} cоздан."
+
       add_station
     end
   end
@@ -100,6 +104,7 @@ class Main
       plus_station = Station.new(station)
       @stations << plus_station
       @routes.last.create_station(plus_station.name)
+      puts "Создана станция следования '#{station}'."
     end
   end
 
@@ -151,10 +156,10 @@ class Main
     puts "Введите:
         1 - добавить вагоны к поезду
         0 - выход "
-        @object = []
+    @object = []
     loop do
       count = gets.chomp
- @object << PassengerCar.new unless @trains.empty?
+      @object << PassengerCar.new unless @trains.empty?
       puts "Пассажирский вагон №#{@object.last.number} создан ."
       @trains.last.coupling_wagon(@object.last) unless @trains.empty?
       message_add_car
@@ -165,27 +170,27 @@ class Main
 
   def message_add_car
     puts "Вагон №#{@object.last.number} прицеплен к поезду."
-puts "В составе поезда стало #{@object.size} вагонов."
+    puts "В составе поезда стало #{@trains.last.train_length} вагонов."
   end
 
   def add_car_to_cargo_train
     puts "Введите:
         1 - добавить вагоны к поезду
         0 - выход "
-        @object = []
+    @object = []
     loop do
       count = gets.chomp
       @object << CargoCar.new unless @trains.empty?
       puts "Грузовой вагон №#{@object.last.number} создан ."
       @trains.last.coupling_wagon(@object.last) unless @trains.empty?
       message_add_car
-       next if count == '1'
+      next if count == '1'
       break if count == '0'
     end
   end
 
   def unhook_car_from_train
-    @trains.last.upcoupling_wagon(@cars.last) unless @trains.empty?
+    @trains.last.upcoupling_wagon(@object.last) unless @trains.empty?
   end
 
   def reliase_train_on_route
@@ -197,6 +202,7 @@ puts "В составе поезда стало #{@object.size} вагонов."
       count = gets.chomp
       if count == '5'
         @trains.last.along_stations unless @trains.empty?
+        p @trains.last
       else
         @trains.last.back_station unless @trains.empty?
       end
@@ -241,4 +247,4 @@ puts "В составе поезда стало #{@object.size} вагонов."
 
 end
 
-main = Main.new
+# main = Main.new

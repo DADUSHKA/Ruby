@@ -14,25 +14,25 @@ class Train
 
   @@add = []
 
+  def self.add
+    @@add ||= []
+  end
+
   def initialize
+    register_instance
     @speed              = 0
     @number             = generate_number
     @train_route
     @composition_wagons = []
-    register_instance
     self.class.add << self
   end
 
-  def self.add
-    @@add ||= []
+  def ay
+    register_instance
   end
 
   def generate_number
     rand(10).to_s
-  end
-
-  def self.add
-    @@add ||= []
   end
 
   def go
@@ -47,7 +47,7 @@ class Train
 
   def coupling_wagon(type_vagon)
     stop
-     @composition_wagons << type_vagon
+    @composition_wagons << type_vagon
   end
 
   def train_length
@@ -92,7 +92,7 @@ class Train
   end
 
 
-  private
+  protected
 
 
   def speed_train
@@ -100,7 +100,9 @@ class Train
   end
 
   def train_announcement
-    puts "#{type} поезд №#{@number} прибыл на станцию #{@real_station}."
+    puts "#{} поезд №#{@number} прибыл на станцию #{@real_station}."
   end
+
+
 
 end

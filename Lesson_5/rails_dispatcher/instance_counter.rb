@@ -8,11 +8,13 @@ module InstanceCounter
 
   module InstanceMethods
 
-    private
+    protected
 
     def register_instance
       self.class.instances
     end
+
+
   end
 
 
