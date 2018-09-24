@@ -14,9 +14,7 @@ module InstanceCounter
       self.class.instances
     end
 
-
   end
-
 
   def self.included(base)
     base.extend ClassMethods

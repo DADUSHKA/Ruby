@@ -18,7 +18,7 @@ class Main
     @stations = []
     @routes = []
     @trains = []
-    #main
+    main
   end
 
   def main
@@ -202,7 +202,6 @@ class Main
       count = gets.chomp
       if count == '5'
         @trains.last.along_stations unless @trains.empty?
-        p @trains.last
       else
         @trains.last.back_station unless @trains.empty?
       end
@@ -247,4 +246,4 @@ class Main
 
 end
 
-# main = Main.new
+main = Main.new

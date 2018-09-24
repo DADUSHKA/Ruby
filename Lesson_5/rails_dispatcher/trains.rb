@@ -27,10 +27,6 @@ class Train
     self.class.add << self
   end
 
-  def ay
-    register_instance
-  end
-
   def generate_number
     rand(10).to_s
   end
@@ -102,7 +98,5 @@ class Train
   def train_announcement
     puts "#{} поезд №#{@number} прибыл на станцию #{@real_station}."
   end
-
-
 
 end
