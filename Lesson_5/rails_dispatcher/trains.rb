@@ -4,7 +4,7 @@ class Train
   include InstanceCounter
 
   attr_accessor :speed
-  attr_reader :amount_wagons, :previous_station, :next_station, :real_station, :number
+  attr_reader :real_station, :number, :composition_wagons, :route
 
   def self.find(number)
     object = nil
@@ -16,6 +16,10 @@ class Train
 
   def self.add
     @@add ||= []
+  end
+
+  def self.indicator
+    @@indicator
   end
 
   def initialize
@@ -52,7 +56,6 @@ class Train
 
   def upcoupling_wagon(type_vagon)
     stop
-    puts "Вагон №#{type_vagon.number} отцеплен от поезда."
     @composition_wagons.delete(type_vagon)
   end
 
@@ -66,25 +69,21 @@ class Train
   def along_stations
     @@indicator +=1
     @real_station = @route[@@indicator]
-    train_announcement
   end
 
   def back_station
     @@indicator -=1
     @real_station = @route[@@indicator]
-    train_announcement
   end
 
   def next_station
     next_index    = route.index(@real_station) + 1
     @next_station = route[next_index]
-    puts "Следующая станция #{@next_station}"
   end
 
   def previous_station
     next_index        = route.index(@real_station) - 1
     @previous_station = @route[next_index]
-    puts "Предыдущая станция #{@prevous_station}"
   end
 
 
@@ -93,10 +92,6 @@ class Train
 
   def speed_train
     puts "Скорость поезда #{@speed}"
-  end
-
-  def train_announcement
-    puts "#{} поезд №#{@number} прибыл на станцию #{@real_station}."
   end
 
 end

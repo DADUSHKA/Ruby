@@ -2,7 +2,7 @@ class Route
 
   include InstanceCounter
 
-  attr_reader :start_station, :list_station
+  attr_reader :list_station
 
   def self.add
     @@add ||= []
