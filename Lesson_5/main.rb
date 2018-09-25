@@ -227,9 +227,6 @@ class Main
         if count == '5'
           @trains.last.along_stations unless @trains.empty?
           puts "#{type_train} поезд №#{@trains.last.number} прибыл на станцию #{@trains.last.real_station}."
-
-          p @trains.last
-
         else
           @trains.last.back_station unless @trains.empty?
           puts "#{type_train} поезд №#{@trains.last.number} прибыл на станцию #{@trains.last.real_station}."
