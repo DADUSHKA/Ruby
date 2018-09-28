@@ -1,6 +1,6 @@
 class PassengerCar < Car
 
-  def initialize
+  def initialize(number)
     super
   end
 

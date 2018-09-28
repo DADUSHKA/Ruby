@@ -3,6 +3,8 @@ class Train
   include NameManufacturer
   include InstanceCounter
 
+  NAMBER_TRAIN =  /^([a-z]|\d){3}-?([a-z]|\d){2}$/i
+
   attr_accessor :speed
   attr_reader :real_station, :number, :composition_wagons, :route
 
@@ -22,17 +24,20 @@ class Train
     @@indicator
   end
 
-  def initialize
+  def initialize(number)
     register_instance
     @speed              = 0
-    @number             = generate_number
+    @number             = number
     @train_route
     @composition_wagons = []
     self.class.add << self
+    validate!
   end
 
-  def generate_number
-    rand(10).to_s
+  def valid?
+    validate!
+  rescue
+    false
   end
 
   def go
@@ -90,8 +95,16 @@ class Train
   protected
 
 
+  def validate!
+    raise "Не правильно введен номер поезда" if number !~ NAMBER_TRAIN
+  end
+
   def speed_train
     puts "Скорость поезда #{@speed}"
   end
+
+  # def generate_number
+  #   rand(10).to_s
+  # end
 
 end

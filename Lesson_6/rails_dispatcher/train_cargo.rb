@@ -1,6 +1,6 @@
 class CargoTrain < Train
 
-  def initialize
+  def initialize(number)
     super
   end
 

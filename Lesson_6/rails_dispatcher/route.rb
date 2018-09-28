@@ -2,6 +2,8 @@ class Route
 
   include InstanceCounter
 
+  STATION_NAME = /\A[A-Z][a-z]+$/
+
   attr_reader :list_station
 
   def self.add
@@ -14,6 +16,13 @@ class Route
     @finish_station = finish_station
     self.class.add << self
     register_instance
+    validate!
+  end
+
+  def valid?
+    validate!
+  rescue
+    false
   end
 
   def create_station(station)
@@ -26,6 +35,14 @@ class Route
 
   def delete_station(station)
     @list_station.delete(station) if @list_station.length > 2
+  end
+
+
+  private
+
+
+  def validate!
+    raise "Сначала создайте станции" if  @list_station.nil?
   end
 
 end

@@ -72,65 +72,81 @@ class Main
   end
 
   def create_station
-    puts "Введите название первой станции:"
-    new_station_name = gets.chomp
-    @stations << Station.new(new_station_name)
-    puts "Создана станция назначения '#{new_station_name}'."
-    puts "Введите название второй станции:"
-    new_station_name = gets.chomp
-    @stations << Station.new(new_station_name)
-    puts "Создана станция прибытия '#{new_station_name}'."
+    begin
+      puts "Введите с заглавной буквы название первой станции:"
+      new_station_name = gets.chomp
+      @stations << Station.new(new_station_name)
+      puts "Создана станция назначения '#{new_station_name}'."
+      puts "Введите с заглавной буквы название второй станции:"
+      new_station_name = gets.chomp
+      @stations << Station.new(new_station_name)
+      puts "Создана станция прибытия '#{new_station_name}'."
+    rescue => e
+      puts "Erorr: #{e.message}"
+      retry
+    end
   end
 
   def create_rout_and_stations
-    if @stations.empty?
-      puts "Сначала создайте станции"
-      gets
-    else
+    begin
       @routes << Route.new(@stations.first.name, @stations.last.name)
       puts "Маршрут #{@stations.first.name} - #{@stations.last.name} cоздан."
       add_station
+    rescue
+      puts "Сначала создайте станции"
+    rescue => e
+      puts "Erorr: #{e.message}"
+      retry
     end
   end
 
   def add_station
-    loop do
-      puts "Введите:
+    begin
+      loop do
+        puts "Введите:
            названия промежуточных станций
            0 - для выхода "
-      station = gets.chomp
-      break if station == '0'
-      plus_station = Station.new(station)
-      @stations << plus_station
-      @routes.last.create_station(plus_station.name)
-      puts "Создана станция следования '#{station}'."
+        station = gets.chomp
+        break if station == '0'
+        plus_station = Station.new(station)
+        @stations << plus_station
+        @routes.last.create_station(plus_station.name)
+        puts "Создана станция следования '#{station}'."
+      rescue => e
+        puts "Erorr: #{e.message}"
+        retry
+      end
     end
   end
 
   def create_train
-    if @routes.empty?
-      puts "Сначала создайте маршрут"
-      gets
-    else
-      puts "Выбирите тип поезда:
+    puts "Выбирите тип поезда:
         1 - пассажирский
         2 - грузовой"
-      @selec = gets.chomp
-      train_selection
-    end
+    @selec = gets.chomp
+    train_selection
   end
 
   def train_selection
-    if @selec == '1'
-      new_train = PassengerTrain.new
-      @trains << new_train
-      @stations.first.receive_trains(new_train) unless @stations.empty?
-      puts "Пассажирский поезд №#{@trains.last.number} создан."
-    else
-      new_train = CargoTrain.new
-      @trains << new_train
-      @stations.first.receive_trains(new_train) unless @stations.empty?
-      puts "Грузовой поезд №#{@trains.last.number} создан."
+    begin
+      if @selec == '1'
+        puts "Введите номер поезда"
+        number = gets.chomp
+        new_train = PassengerTrain.new(number)
+        @trains << new_train
+        @stations.first.receive_trains(new_train) unless @stations.empty?
+        puts "Пассажирский поезд №#{@trains.last.number} создан."
+      else
+        puts "Введите номер поезда"
+        number = gets.chomp
+        new_train = CargoTrain.new(number)
+        @trains << new_train
+        @stations.first.receive_trains(new_train) unless @stations.empty?
+        puts "Грузовой поезд №#{@trains.last.number} создан."
+      end
+    rescue => e
+      puts "Erorr: #{e.message}"
+      retry
     end
   end
 
@@ -143,9 +159,13 @@ class Main
   end
 
   def give_rout_train
-    @trains.last.take_route(@routes.last) unless @routes.empty?
-    type_train
-    puts "#{type_train} поезд  №#{@trains.last.number} находится станции #{@stations.first.name}."
+    begin
+      @trains.last.take_route(@routes.last) unless @routes.empty?
+      type_train
+      puts "#{type_train} поезд  №#{@trains.last.number} находится станции #{@stations.first.name}."
+    rescue
+      puts "Сначала создайте маршрут и поезд"
+    end
   end
 
   def add_car_to_train
@@ -167,10 +187,17 @@ class Main
     @object = []
     loop do
       count = gets.chomp
-      @object << PassengerCar.new unless @trains.empty?
-      puts "Пассажирский вагон №#{@object.last.number} создан ."
-      @trains.last.coupling_wagon(@object.last) unless @trains.empty?
-      message_add_car
+      puts "Введите номер создаваемого вагона"
+      number = gets.chomp
+      begin
+        @object << PassengerCar.new(number) unless @trains.empty?
+        puts "Пассажирский вагон №#{@object.last.number} создан ."
+        @trains.last.coupling_wagon(@object.last) unless @trains.empty?
+        message_add_car
+      rescue => e
+        puts "Erorr: #{e.message}"
+        enter
+      end
       next if count == '1'
       break if count == '0'
     end
@@ -188,13 +215,19 @@ class Main
     @object = []
     loop do
       count = gets.chomp
-      @object << CargoCar.new unless @trains.empty?
-      puts "Грузовой вагон №#{@object.last.number} создан ."
-      @trains.last.coupling_wagon(@object.last) unless @trains.empty?
-      message_add_car
+      puts "Введите номер создаваемого вагона"
+      number = gets.chomp
+      begin
+        @object << CargoCar.new(number) unless @trains.empty?
+        puts "Грузовой вагон №#{@object.last.number} создан ."
+        @trains.last.coupling_wagon(@object.last) unless @trains.empty?
+        message_add_car
+      rescue => e
+        puts "Erorr: #{e.message}"
+        enter
+      end
       next if count == '1'
       break if count == '0'
-      p @trains.last
     end
   end
 
@@ -268,6 +301,10 @@ class Main
 
     def wrong
       puts "Не правильный выбор команды"
+    end
+
+    def enter
+      puts "Нажмите 'Enter"
     end
 
   end
