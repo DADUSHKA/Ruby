@@ -89,6 +89,10 @@ class Train
     @previous_station = @route[next_index]
   end
 
+   def takes_a_block_wagon(&_block)
+      @composition_wagons.each { |wagon| yield wagon } if block_given?
+  end
+
 
   protected
 
