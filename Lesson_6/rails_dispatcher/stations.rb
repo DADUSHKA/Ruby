@@ -42,7 +42,7 @@ class Station
 
 
   def validate!
-    raise "Введите название станции" if name.nil?
+    raise "Введите название станции" unless name
     raise "Введите название станции с большой буквы" if name !~ STATION_NAME
   end
 

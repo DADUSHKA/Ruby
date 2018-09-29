@@ -42,7 +42,7 @@ class Route
 
 
   def validate!
-    raise "Сначала создайте станции" if  @list_station.nil?
+    raise "Сначала создайте станции" unless @list_station
   end
 
 end
