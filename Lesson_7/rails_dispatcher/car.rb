@@ -17,9 +17,7 @@ class Car
   private
 
   def validate!
-    raise 'Введите номер' if number.nil?
+    raise 'Введите номер' unless @number
     raise 'Введите правильно номер' if number.length > 3
-
-    true
   end
 end
