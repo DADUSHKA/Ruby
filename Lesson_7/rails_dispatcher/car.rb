@@ -1,5 +1,4 @@
 class Car
-
   include NameManufacturer
 
   attr_reader :number
@@ -11,18 +10,16 @@ class Car
 
   def valid?
     validate!
-  rescue
+  rescue StandardError
     false
   end
 
-
   private
 
-
   def validate!
-    raise "Введите номер" if number.nil?
-    raise "Введите правильно номер" if number.length > 3
+    raise 'Введите номер' if number.nil?
+    raise 'Введите правильно номер' if number.length > 3
+
     true
   end
-
 end

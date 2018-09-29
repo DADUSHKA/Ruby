@@ -1,9 +1,8 @@
 class Train
-
   include NameManufacturer
   include InstanceCounter
 
-  NAMBER_TRAIN  =  /^([a-z]|\d){3}-?([a-z]|\d){2}$/i
+  NAMBER_TRAIN = /^([a-z]|\d){3}-?([a-z]|\d){2}$/i
 
   attr_accessor :speed, :number
   attr_reader :real_station, :composition_wagons, :route
@@ -28,7 +27,7 @@ class Train
     register_instance
     @speed              = 0
     @number             = number
-    @train_route
+    @train_route        = nil
     @composition_wagons = []
     self.class.add << self
     validate!
@@ -36,7 +35,7 @@ class Train
 
   def valid?
     validate!
-  rescue
+  rescue StandardError
     false
   end
 
@@ -70,12 +69,12 @@ class Train
 
   @@indicator = 0
   def along_stations
-    @@indicator +=1
+    @@indicator += 1
     @real_station = @route[@@indicator]
   end
 
   def back_station
-    @@indicator -=1
+    @@indicator -= 1
     @real_station = @route[@@indicator]
   end
 
@@ -89,16 +88,13 @@ class Train
     @previous_station = @route[next_index]
   end
 
-   def takes_a_block_wagon(&_block)
-      @composition_wagons.each { |wagon| yield wagon } if block_given?
+  def takes_block_wagon(&_block)
+    @composition_wagons.each { |wagon| yield wagon } if block_given?
   end
-
 
   protected
 
-
   def validate!
-    raise "Не правильно введен номер поезда" if number !~ NAMBER_TRAIN
+    raise 'Не правильно введен номер поезда' if number !~ NAMBER_TRAIN
   end
-
 end

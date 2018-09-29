@@ -1,5 +1,4 @@
 class Route
-
   include InstanceCounter
 
   STATION_NAME = /\A[A-Z][a-z]+$/
@@ -21,7 +20,7 @@ class Route
 
   def valid?
     validate!
-  rescue
+  rescue StandardError
     false
   end
 
@@ -37,12 +36,9 @@ class Route
     @list_station.delete(station) if @list_station.length > 2
   end
 
-
   private
 
-
   def validate!
-    raise "Сначала создайте станции" unless @list_station
+    raise 'Сначала создайте станции' unless @list_station
   end
-
 end
