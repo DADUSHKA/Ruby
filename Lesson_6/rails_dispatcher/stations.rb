@@ -14,7 +14,6 @@ class Station
 
   def self.all
     @@add.map { |i| p "#{i.name}"} unless @@add.nil?
-    return
   end
 
   def initialize(name)

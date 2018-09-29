@@ -25,8 +25,4 @@ class Car
     true
   end
 
-  # def generate_number
-  #   rand(10).to_s
-  # end
-
 end

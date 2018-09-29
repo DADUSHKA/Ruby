@@ -307,6 +307,15 @@ class Main
       puts "Нажмите 'Enter"
     end
 
+
+def prim
+
+end
+
+
+
+
+
   end
 
-  main = Main.new
+  # main = Main.new
