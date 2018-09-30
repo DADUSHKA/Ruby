@@ -1,16 +1,27 @@
 class  Car
 
-  attr_reader :free_places, :occupied_places
 
-  def initialize(number, count)
-    @free_places = []
-    count.times{|i| @free_places << i}
-    @occupied_places = []
-     @number = number
+
+attr_reader :total_space
+
+  def initialize(number, total_space)
+   @number = number
+    @total_space = []
+    total_space.times{|i| @total_space << i}
+    @load_load = []
   end
 
-  def sale_place
-    @occupied_places << @free_places.delete_at(1)
-  end
+def load
+  @load_load <<  @total_space.delete_at(1)
+end
+
+def load_load(var)
+  var.times{|i| load }
+end
+
+
+
+
+
 
 end

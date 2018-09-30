@@ -24,6 +24,7 @@ class Train
   end
 
   def initialize(number)
+    @real_station       = nil
     register_instance
     @speed              = 0
     @number             = number

@@ -45,6 +45,8 @@ class Main
           option(reliase_train_on_route)
         when "8"
           option(information)
+        when "11"
+          option(select_stations)
         when "info"
           option(information)
         else
@@ -68,6 +70,7 @@ class Main
           6 - отцепить вагоны от поезда
           7 - переместить поезд по маршруту вперед и назад
           8 - просмотреть список станций и список поездов на станции
+          11
           9 - выход"
   end
 
@@ -114,7 +117,7 @@ class Main
         add_station_curent
       end
       puts 'Список станций маршрута:'
-      puts "#{st}"
+      puts "#{@routes.last.list_station.join(", ")}"
     rescue => e
       puts "Erorr: #{e.message}"
       retry
@@ -207,8 +210,8 @@ class Main
     puts "Введите номер создаваемого вагона"
     @number = gets.chomp
     puts "Введите колличество мест создаваемого вагона" if @var == '1'
-    puts 'Введите объем создаваемого вагона' if @var == '2'
-    count = gets.chomp
+    puts 'Введите объем в тоннах создаваемого вагона' if @var == '2'
+    count = gets.chomp.to_i
     @object << PassengerCar.new(@number, count) if @var == '1'
     @object << CargoCar.new(@number, count) if @var == '2'
   end
@@ -280,6 +283,15 @@ class Main
     end
 
     def information
+      puts "--------------"
+      p @stations
+      puts "--------------"
+      p @routes
+      puts "--------------"
+      p @trains
+      puts "--------------"
+      puts
+      puts "--------------"
       puts "сколько"
       puts "Создано: #{@trains.size} поездов"
       puts "Создано: #{@routes.size} маршрутов"
@@ -317,17 +329,40 @@ class Main
       puts "Нажмите 'Enter"
     end
 
-
-    # def prim
-
-    # end
-
-    # def validate!
-    #   raise 'Не правильный тип вагона'  if var != '2' &&  @trains.last.is_a?(CargoTrain)
-    #   raise 'Не правильный тип вагона' if var != '1' &&  @trains.last.is_a?(PassengerTrain)
-    # end
+    def type_train_print
+    if @trains.is_a?(PassengerTrain)
+      type_train = 'Пассажирски'
+    elsif @trains.is_a?(CargoTrain)
+      type_train = 'Грузовой'
+    end
+  end
 
 
+    def select_stations
+      @stations.each do |station|
+
+        station.takes_a_block_train do |train|
+           puts "Станция нахождения #{train.start_station}"
+          puts "Тип поезда: пассажирский " if train.class == PassengerTrain
+           puts "Тип поезда: грузовой " if train.class == CargoTrain
+          puts "Номер поезда #{train.number}"
+          puts "Колличество вагонов #{train.composition_wagons.size}"
+          select_train(train)
+        end
+      end
+    end
+
+
+    def select_train(train)
+      train.takes_block_wagon do |car|
+        puts "Номер вагона №#{car.number}"
+        puts "Свободных мест #{car.free_places.size}" if car.class == PassengerCar
+        puts "Занятых мест #{car.occupied_places.size}" if car.class == PassengerCar
+        puts "Загружено #{car.load_load.size}т." if car.class == CargoCar
+        puts "Можно загрузить #{car.total_space.size}т." if car.class == CargoCar
+      end
+      p '-----'
+    end
 
   end
 
