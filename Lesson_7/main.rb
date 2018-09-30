@@ -38,7 +38,7 @@ class Main
         when "4"
           option(give_rout_train)
         when "5"
-          option(add_car_to_train)
+          option(create_and_add_car_to_train)
         when "6"
           option(unhook_car_from_train)
         when "7"
@@ -174,41 +174,50 @@ class Main
     end
   end
 
-
-
-
-  def add_car_to_train
+  def create_and_add_car_to_train
     puts "Выбирите тип вагона:
         1 - пассажирский
         2 - грузовой"
-    var = gets.chomp
+    @var = gets.chomp
+    validate_car
     puts "Введите:
         1 - добавить вагоны к поезду
         0 - выход "
     @object = []
     loop do
-       begin
-        count = gets.chomp
+      count = gets.chomp
+      begin
         break if count == '0'
-        puts "Введите номер создаваемого вагона"
-        @number = gets.chomp
-
-        @object << PassengerCar.new(@number) if var == '1' && @trains.last.is_a?(PassengerTrain)
-        @object << CargoCar.new(@number) if var == '2' && @trains.last.is_a?(CargoTrain)
-       rescue => e
-         puts "Erorr: #{e.message}"
-         retry
-      # rescue
-        # puts 'Не правильно выбран тип вагона'
-        # retry
-       end
-      type_car
-      # puts "#{type_car} вагон №#{@object.last.number} создан ."
-      @trains.last.coupling_wagon(@object.last) unless @trains.empty?
-
-      message_add_car
+        create_car
+      rescue => e
+        puts "Erorr: #{e.message}"
+        retry
+      end
+      add_car_to_train
       next if count == '1'
     end
+  end
+
+  def validate_car
+    puts "Не правильный тип вагона  " if @var != '2' &&  @trains.last.is_a?(CargoTrain)
+    puts "Не правильный тип вагона "  if @var != '1' &&  @trains.last.is_a?(PassengerTrain)
+  end
+
+  def create_car
+    puts "Введите номер создаваемого вагона"
+    @number = gets.chomp
+    puts "Введите колличество мест создаваемого вагона" if @var == '1'
+    puts 'Введите объем создаваемого вагона' if @var == '2'
+    count = gets.chomp
+    @object << PassengerCar.new(@number, count) if @var == '1'
+    @object << CargoCar.new(@number, count) if @var == '2'
+  end
+
+  def add_car_to_train
+    type_car
+    puts "#{type_car} вагон №#{@object.last.number} создан ."
+    @trains.last.coupling_wagon(@object.last) unless @trains.empty?
+    message_add_car
   end
 
   def type_car
@@ -219,15 +228,10 @@ class Main
     end
   end
 
-
   def message_add_car
-    # puts "Вагон №#{@object.last.number} прицеплен к поезду."
+    puts "Вагон №#{@object.last.number} прицеплен к поезду."
     puts "В составе поезда стало #{@trains.last.train_length} вагонов."
   end
-
-
-
-
 
   def unhook_car_from_train
     puts "Введите:
@@ -236,12 +240,16 @@ class Main
     loop do
       count = gets.chomp
       break puts "Все вагоны отцеплены"if @trains.last.composition_wagons.empty?
-        @trains.last.upcoupling_wagon(@trains.last.composition_wagons.last) unless @trains.empty?
-        puts "Вагон №#{@object.last.number} отцеплен от поезда."
-        @object.pop
+        unhook
         next if count == '1'
         break if count == '0'
       end
+    end
+
+    def unhook
+      @trains.last.upcoupling_wagon(@trains.last.composition_wagons.last) unless @trains.empty?
+      puts "Вагон №#{@object.last.number} отцеплен от поезда."
+      @object.pop
     end
 
     def reliase_train_on_route
@@ -250,20 +258,24 @@ class Main
           6 - назад
           0 - стоп"
       loop do
-        count = gets.chomp
+        @go = gets.chomp
         break puts "Поезд прибыл на станцию прибытия #{@stations.last.name}" if
         @trains.last.real_station == @stations.last.name
         break puts "Поезд прибыл на начальную станцию #{@stations.first.name}" if
         @trains.last.real_station == @stations.first.name
-        if count == '5'
-          @trains.last.along_stations unless @trains.empty?
-          puts "#{type_train} поезд №#{@trains.last.number} прибыл на станцию #{@trains.last.real_station}."
-        else
-          @trains.last.back_station unless @trains.empty?
-          puts "#{type_train} поезд №#{@trains.last.number} прибыл на станцию #{@trains.last.real_station}."
-        end
-        next if count == '5' && count == '6'
-        break if count == '0'
+        move
+        next if @go == '5' && @go == '6'
+        break if @go == '0'
+      end
+    end
+
+    def move
+      if @go == '5'
+        @trains.last.along_stations unless @trains.empty?
+        puts "#{type_train} поезд №#{@trains.last.number} прибыл на станцию #{@trains.last.real_station}."
+      else
+        @trains.last.back_station unless @trains.empty?
+        puts "#{type_train} поезд №#{@trains.last.number} прибыл на станцию #{@trains.last.real_station}."
       end
     end
 
@@ -306,11 +318,14 @@ class Main
     end
 
 
-    def prim
+    # def prim
 
-    end
+    # end
 
-
+    # def validate!
+    #   raise 'Не правильный тип вагона'  if var != '2' &&  @trains.last.is_a?(CargoTrain)
+    #   raise 'Не правильный тип вагона' if var != '1' &&  @trains.last.is_a?(PassengerTrain)
+    # end
 
 
 

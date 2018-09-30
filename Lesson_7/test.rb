@@ -1,4 +1,4 @@
-class PassengerCar < Car
+class  Car
 
   attr_reader :free_places, :occupied_places
 
@@ -6,7 +6,7 @@ class PassengerCar < Car
     @free_places = []
     count.times{|i| @free_places << i}
     @occupied_places = []
-    super
+     @number = number
   end
 
   def sale_place
@@ -14,4 +14,3 @@ class PassengerCar < Car
   end
 
 end
-

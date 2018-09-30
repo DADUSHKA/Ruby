@@ -30,7 +30,7 @@ class Train
     @train_route        = nil
     @composition_wagons = []
     self.class.add << self
-    validate!
+    # validate!
   end
 
   def valid?
