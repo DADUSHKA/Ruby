@@ -1,5 +1,5 @@
 class CargoCar < Car
-  attr_reader :total_space, :load_load, :load_load_car
+  attr_reader :total_space, :load_load
 
   def initialize(number, total_space)
     super

@@ -70,11 +70,11 @@ class Main
   end
 
   def create_stations
-    2.times { |_i| create_station }
-  rescue StandardError => e
-    puts "Erorr: #{e.message}"
-    retry
-  end
+    2.times { create_station }
+    rescue StandardError => e
+      puts "Erorr: #{e.message}"
+      retry
+    end
 
   def create_station
     puts 'Введите с заглавной буквы название  станции:'
@@ -84,7 +84,7 @@ class Main
   end
 
   def create_rout_and_stations
-    add_rout
+    add_route
     add_stations
   rescue StandardError
     puts 'Сначала создайте станции'
@@ -93,7 +93,7 @@ class Main
     retry
   end
 
-  def add_rout
+  def add_route
     @routes << Route.new(@stations.first.name, @stations.last.name)
     puts "Маршрут #{@stations.first.name} - #{@stations.last.name} cоздан."
   end
@@ -110,7 +110,7 @@ class Main
   def add_station_loop
     loop do
       puts "Введите:  названия промежуточных станций
-                        0 - для выхода "
+                      0 - для выхода "
       @choice = gets.chomp
       break if @choice == '0'
 
@@ -127,8 +127,8 @@ class Main
 
   def create_train
     puts "Выбирите тип поезда:
-        1 - пассажирский
-        2 - грузовой"
+      1 - пассажирский
+      2 - грузовой"
     @selec = gets.chomp
     train_selection
   end
@@ -153,7 +153,7 @@ class Main
 
   def type_train
     if @trains.last.is_a?(PassengerTrain)
-      type_train = 'Пассажирски'
+      type_train = 'Пассажирский'
     elsif @trains.last.is_a?(CargoTrain)
       type_train = 'Грузовой'
     end
@@ -169,13 +169,13 @@ class Main
 
   def create_and_add_car_to_train
     puts "Выбирите тип вагона:
-        1 - пассажирский
-        2 - грузовой"
+      1 - пассажирский
+      2 - грузовой"
     @var = gets.chomp
     validate_car
     puts "Введите:
-        1 - добавить вагоны к поезду
-        0 - выход "
+      1 - добавить вагоны к поезду
+      0 - выход "
     @object = []
     loop do
       count = gets.chomp
@@ -200,7 +200,7 @@ class Main
   def create_cars
     puts 'Введите номер создаваемого вагона'
     @number = gets.chomp
-    puts 'Введите колличество мест создаваемого вагона' if @var == '1'
+    puts 'Введите количество мест создаваемого вагона' if @var == '1'
     puts 'Введите объем в тоннах создаваемого вагона' if @var == '2'
     @coun = gets.chomp.to_i
     create_car
@@ -215,8 +215,8 @@ class Main
 
   def sale_place
     puts 'Занять место в вагоне:
-                    1 - купить билет
-                    0 - выйти'
+                  1 - купить билет
+                  0 - выйти'
     loop do
       coun = gets.chomp
       break if coun == '0'
@@ -232,7 +232,7 @@ class Main
     space = gets.chomp.to_i
     @object.last.load_load_car(space)
     puts "Вагон загружен на: #{@object.last.load_load.size} (т.)
-        свободного места на: #{@object.last.total_space.size} (т.)"
+      свободного места на: #{@object.last.total_space.size} (т.)"
   end
 
   def add_car_to_train
@@ -244,7 +244,7 @@ class Main
 
   def type_car
     if @object.last.is_a?(PassengerCar)
-      type_car = 'Пассажирски'
+      type_car = 'Пассажирский'
     elsif @object.last.is_a?(CargoCar)
       type_car = 'Грузовой'
     end
@@ -257,8 +257,8 @@ class Main
 
   def unhook_car_from_train
     puts "Введите:
-        1 - отцепить вагон от поезда
-        0 - выход "
+      1 - отцепить вагон от поезда
+      0 - выход "
     loop do
       count = gets.chomp
       break puts 'Все вагоны отцеплены' if @trains.last.composition_wagons.empty?
@@ -267,7 +267,7 @@ class Main
       next if count == '1'
       break if count == '0'
     end
-    end
+  end
 
   def unhook
     @trains.last.upcoupling_wagon(@trains.last.composition_wagons.last) unless @trains.empty?
@@ -277,9 +277,9 @@ class Main
 
   def reliase_train_on_route
     puts "Движение поезда:
-        5 - вперёд
-        6 - назад
-        0 - стоп"
+      5 - вперёд
+      6 - назад
+      0 - стоп"
     loop do
       @go = gets.chomp
       break puts "Поезд прибыл на станцию прибытия #{@stations.last.name}" if
@@ -355,13 +355,13 @@ class Main
         puts 'Тип поезда: грузовой ' if train.class == CargoTrain
         puts "Номер поезда: №#{train.number}"
         puts "Колличество вагонов: #{train.composition_wagons.size}"
-        select_train(train)
+        each_train(train)
       end
     end
     puts '=============='
   end
 
-  def select_train(train)
+  def each_train(train)
     train.takes_block_wagon do |car|
       puts "Номер вагона: №#{car.number}"
       puts "Свободных мест: #{car.free_places.size}" if car.class == PassengerCar
