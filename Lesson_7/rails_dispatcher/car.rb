@@ -3,7 +3,7 @@ class Car
 
   attr_reader :number
 
-  def initialize(number, count)
+  def initialize(number, _count)
     @number = number
     validate!
   end

@@ -24,14 +24,14 @@ class Train
   end
 
   def initialize(number)
-    @real_station       = nil
+    @real_station = 'станция отправления'
     register_instance
     @speed              = 0
     @number             = number
     @train_route        = nil
     @composition_wagons = []
     self.class.add << self
-    # validate!
+    validate!
   end
 
   def valid?

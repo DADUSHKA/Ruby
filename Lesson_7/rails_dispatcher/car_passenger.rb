@@ -1,10 +1,9 @@
 class PassengerCar < Car
-
   attr_reader :free_places, :occupied_places
 
   def initialize(number, count)
     @free_places = []
-    count.times{|i| @free_places << i}
+    count.times { |i| @free_places << i }
     @occupied_places = []
     super
   end
@@ -12,6 +11,4 @@ class PassengerCar < Car
   def sale_place
     @occupied_places << @free_places.delete_at(1)
   end
-
 end
-
