@@ -20,7 +20,7 @@ class Main
   end
 
   def main
-    catch (:exit) do
+    catch :exit do
       puts 'Приветствую за виртуальны диспетчерским пультом.'
       loop do
         main_menu
@@ -71,10 +71,10 @@ class Main
 
   def create_stations
     2.times { create_station }
-    rescue StandardError => e
-      puts "Erorr: #{e.message}"
-      retry
-    end
+  rescue StandardError => e
+    puts "Erorr: #{e.message}"
+    retry
+  end
 
   def create_station
     puts 'Введите с заглавной буквы название  станции:'
@@ -135,8 +135,8 @@ class Main
 
   def train_selection
     selection_type_train
-    type_train
-    puts "#{type_train} поезд  №#{@trains.last.number} создан."
+
+    puts "#{@trains.last.class}  №#{@trains.last.number} создан."
   rescue StandardError => e
     puts "Erorr: #{e.message}"
     retry
@@ -151,18 +151,9 @@ class Main
     @stations.first.receive_trains(new_train) unless @stations.empty?
   end
 
-  def type_train
-    if @trains.last.is_a?(PassengerTrain)
-      type_train = 'Пассажирский'
-    elsif @trains.last.is_a?(CargoTrain)
-      type_train = 'Грузовой'
-    end
-  end
-
   def give_rout_train
     @trains.last.take_route(@routes.last) unless @routes.empty?
-    type_train
-    puts "#{type_train} поезд  №#{@trains.last.number} находится станции #{@stations.first.name}."
+    puts "#{@trains.last.class}  №#{@trains.last.number} находится станции #{@stations.first.name}."
   rescue StandardError
     puts 'Сначала создайте маршрут и поезд'
   end
@@ -236,18 +227,9 @@ class Main
   end
 
   def add_car_to_train
-    type_car
-    puts "#{type_car} вагон №#{@object.last.number} создан ."
+    puts "#{@object.last.class}  №#{@object.last.number} создан ."
     @trains.last.coupling_wagon(@object.last) unless @trains.empty?
     message_add_car
-  end
-
-  def type_car
-    if @object.last.is_a?(PassengerCar)
-      type_car = 'Пассажирский'
-    elsif @object.last.is_a?(CargoCar)
-      type_car = 'Грузовой'
-    end
   end
 
   def message_add_car
@@ -296,11 +278,12 @@ class Main
   def move
     if @go == '5'
       @trains.last.along_stations unless @trains.empty?
-      puts "#{type_train} поезд №#{@trains.last.number} прибыл на станцию #{@trains.last.real_station}."
     else
       @trains.last.back_station unless @trains.empty?
-      puts "#{type_train} поезд №#{@trains.last.number} прибыл на станцию #{@trains.last.real_station}."
     end
+    puts "#{@trains.last.class}  №#{@trains.last.number}
+       прибыл на станцию
+       #{@trains.last.real_station}."
   end
 
   def information
@@ -371,6 +354,6 @@ class Main
     end
     puts '---------------------'
   end
-  end
+end
 
-main = Main.new
+# main = Main.new
