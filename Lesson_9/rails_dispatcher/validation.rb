@@ -1,16 +1,16 @@
 module Validation
   module ClassMethods
-    def validate(attribute, *params)
+    def validate(name, *params)
       validates_obj = '@validates'
-      instance_variable_get(validates_obj)[attribute] = *params
+      instance_variable_get(validates_obj)[name] = *params
       instance_variable_set(validates_obj, {}) unless instance_variable_defined?(validates_obj)
     end
   end
 
   module InstanceMethods
     def validate!
-      self.class.instance_variable_get('@validates').each do |attribute, params|
-        send("validate_#{params[0]}", attribute, *params[1, params.size])
+      self.class.instance_variable_get('@validates').each do |name, params|
+        send("validate_#{params[0]}", name, *params[1, params.size])
       end
       true
     end
@@ -23,18 +23,18 @@ module Validation
 
     private
 
-    def validate_presence(attribute)
-      value = instance_variable_get("@#{attribute}")
+    def validate_presence(name)
+      value = instance_variable_get("@#{name}")
       raise 'Пустой аргумент!' if value.nil? || value.empty?
     end
 
-    def validate_format(attribute, format, message = 'Не правильный формат ввода!')
-      value = instance_variable_get("@#{attribute}")
+    def validate_format(name, format, message = 'Не правильный формат ввода!')
+      value = instance_variable_get("@#{name}")
       raise ArgumentError, message unless value =~ format
     end
 
-    def validate_type(attribute, type, message = 'Не совпадение типов!')
-      type_class = instance_variable_get("@#{attribute}").to_s
+    def validate_type(name, type, message = 'Не совпадение типов!')
+      type_class = instance_variable_get("@#{name}").to_s
       raise ArgumentError, message if type_class != type
     end
   end

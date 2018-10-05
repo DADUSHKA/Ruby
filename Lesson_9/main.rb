@@ -1,3 +1,5 @@
+require_relative 'rails_dispatcher/acсessors'
+require_relative 'rails_dispatcher/validation'
 require_relative 'rails_dispatcher/instance_counter'
 require_relative 'rails_dispatcher/name_of_the_manufacturer'
 require_relative 'rails_dispatcher/route'
@@ -8,7 +10,7 @@ require_relative 'rails_dispatcher/car_passenger'
 require_relative 'rails_dispatcher/trains'
 require_relative 'rails_dispatcher/train_cargo'
 require_relative 'rails_dispatcher/train_passenger'
-require 'pry'
+
 class Main
   attr_reader :trains
 
@@ -356,4 +358,4 @@ class Main
   end
 end
 
-# main = Main.new
+main = Main.new

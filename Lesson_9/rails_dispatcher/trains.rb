@@ -1,11 +1,19 @@
 class Train
   include NameManufacturer
   include InstanceCounter
+  include Validation
+  extend Acсessors
 
   NAMBER_TRAIN = /^([a-z]|\d){3}-?([a-z]|\d){2}$/i
 
+  my_attr_accessor :color, :power
+  strong_attr_accessor(:strong_attrb, String)
   attr_accessor :speed, :number
   attr_reader :real_station, :composition_wagons, :route
+
+  validate :name, :presence
+  validate :name, :format, NUMBER_TRAIN
+  validate :type_class, :type, 'Train'
 
   def self.find(number)
     object = nil

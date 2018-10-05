@@ -1,9 +1,16 @@
 class Station
   include InstanceCounter
+  include Validation
+  extend Acсessors
 
   STATION_NAME = /\A[A-Z][a-z]+$/
 
+  my_attr_accessor :town, :terminal
+  strong_attr_accessor(:strong_attrb, String)
   attr_reader :list_all_train, :list_type_train, :name
+
+  validate :name, :presence
+  validate :type_class, :type, 'Station'
 
   @@add = []
 
